@@ -1,5 +1,5 @@
 
-[Visit Smartttshoppp](https://smartttvshoppp.vercel.app)
+[Visit Smartttshoppp](https://shopppvsmart.vercel.app)
 
 
 ![Product Image](./src/assets/product.jpg)
