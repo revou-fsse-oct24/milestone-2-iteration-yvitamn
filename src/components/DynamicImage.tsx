@@ -12,7 +12,7 @@ interface DynamicImageProps {
 }
 
 const DynamicImageComponent = ({ imageUrl, alt, width, height }: DynamicImageProps) => {
-  const [imgSrc, setImgSrc] = useState<string>(imageUrl || '/images/fallback.jpg'); // Default to fallback if no imageUrl
+  const [imgSrc, setImgSrc] = useState<string>(imageUrl || '/images/fall-back.webp'); // Default to fallback if no imageUrl
 
   useEffect(() => {
     if (!imageUrl) {
@@ -23,7 +23,7 @@ const DynamicImageComponent = ({ imageUrl, alt, width, height }: DynamicImagePro
   }, [imageUrl]);
 
   const handleError = () => {
-    setImgSrc('/public/images/fall-back.webp'); // Set fallback if image fails to load
+    setImgSrc('/images/fall-back.webp'); // Set fallback if image fails to load
   };
 
   return (
