@@ -1,20 +1,18 @@
 'use client';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
-import { usePathname } from 'next/navigation';
+//import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { CategoryType } from '@/lib/types';
+import { useNavbar } from '@/hooks/useNavbar';
 import { ChevronDown, ChevronUp, ShoppingCart, User, LogOut, List, ShoppingBag } from 'lucide-react';
 
-interface NavbarProps {
-  categories: CategoryType[];
-}
-const Navbar = ({ categories }: NavbarProps) => {
-  const { userLogin, logout, isAuthenticated } = useAuth(); // Access user and authentication state
-  const pathname = usePathname(); 
-  const router = useRouter();
 
+const Navbar = () => {
+  const { userLogin, logout, isAuthenticated } = useAuth(); // Access user and authentication state
+  const { categories, isActive } = useNavbar();
+  //const pathname = usePathname(); 
+  const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isLoggedOut, setIsLoggedOut] = useState(false); 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -47,12 +45,6 @@ const Navbar = ({ categories }: NavbarProps) => {
     localStorage.removeItem('token');
   };
   
-
-  //const pathname = router.pathname;
-  const isActive = (path: string) => {
-    return pathname === path ? "text-gray-300" : "hover:text-gray-300";
-  };
-
   // const toggleMenu = () => {
   //   setIsMenuOpen(!isMenuOpen); // Toggle menu visibility
   // };
@@ -60,29 +52,25 @@ const Navbar = ({ categories }: NavbarProps) => {
   return (
     <nav className="bg-gray-800 p-4 text-white">
     <div className="container mx-auto flex justify-between items-center">
-      <ul className="flex space-x-4">
+      {/* Navbar Links Section */}
+      <div className="flex space-x-6">
         {/* Home Link */}
-        <li>
-          <Link href="/" className={isActive("/")}>
-            Home
-          </Link>
-        </li>
+        <Link href="/" className={isActive("/")}>
+          Home
+        </Link>
 
         {/* Products Link */}
-        <li>
-          <Link href="/products" className={isActive("/products")}>
-            <ShoppingBag className="inline mr-1" size={18} /> Products
-          </Link>
-        </li>
+        <Link href="/products" className={isActive("/products")}>
+          <ShoppingBag className="inline mr-1" size={18} /> Products
+        </Link>
 
         {/* Categories Dropdown */}
-        <li className="relative inline-block text-left">
+        <div className="relative inline-block text-left">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="text-white hover:text-gray-300"
           >
-            {/* Updated icon size to larger one (size={24}) */}
-            <List className="inline mr-2" size={24} /> Categories {/* Larger icon */}
+            <List className="inline mr-2" size={24} /> Categories
             {isDropdownOpen ? (
               <ChevronUp className="inline ml-1" size={16} />
             ) : (
@@ -92,47 +80,43 @@ const Navbar = ({ categories }: NavbarProps) => {
 
           {isDropdownOpen && (
             <div
-              className="absolute left-0 mt-2 w-96 bg-black bg-opacity-50 text-white border border-gray-300 rounded-lg shadow-lg"
+              className=
+              "absolute left-0 mt-2 w-96 bg-black bg-opacity-50 text-white border border-gray-300 rounded-lg shadow-lg"
               ref={dropdownRef}
               role="menu"
             >
-              <ul className="py-2">
+              <div className="py-2">
                 {/* Iterate over categories and display each one */}
                 {categories.map((category) => (
-                  <li
+                  <div
                     key={category.id}
                     className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                    onClick={() => handleCategoryClick(category.id)}
                   >
-                    <span onClick={() => handleCategoryClick(category.id)}>
-                      {category.name}
-                    </span>
-                  </li>
+                    {category.name}
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
-        </li> {/* Added closing </li> tag */}
+        </div>
 
-        {/* Checkout Link */}
+        {/* Checkout Link (only visible when logged in) */}
         {isAuthenticated && !isLoggedOut && (
-          <li>
-            <Link href="/checkout" className={isActive("/checkout")}>
-              <ShoppingCart className="inline mr-1" size={18} /> Checkout
-            </Link>
-          </li>
+          <Link href="/checkout" className={isActive("/checkout")}>
+            <ShoppingCart className="inline mr-1" size={18} /> Checkout
+          </Link>
         )}
-      </ul>
+      </div>
 
       {/* User Links (Login/SignUp or User Profile + Logout) */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-6">
         {isAuthenticated && !isLoggedOut ? (
           <>
-            <span className="text-gray-300">
-              <span>{userLogin?.name}</span>
-            </span>
+            <span className="text-gray-300">{userLogin?.name}</span>
             <span
               onClick={handleLogout}
-              className="cursor-pointer hover:text-gray-300 ml-4"
+              className="cursor-pointer hover:text-gray-300"
             >
               <LogOut className="inline mr-1" size={18} /> Logout
             </span>

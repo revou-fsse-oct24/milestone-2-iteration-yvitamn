@@ -91,10 +91,9 @@ const CheckoutPage = () => {
     //   }
     
 
-            //Check if user is authenticated and data is available
+        
         if (!isAuthenticated) {
-            router.push('/checkout'); 
-            return null;
+          return <p>Loading...</p>;
         }
 
         if (errorUserData) {

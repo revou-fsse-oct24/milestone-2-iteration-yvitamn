@@ -37,14 +37,14 @@ const CategoriesPage = ({ categories }: CategoriesPageProps) => {
   
     return (
       <div>
-        <Navbar categories={categories} />
-    <div className="container mx-auto p-4">
+        <Navbar   />
+    {/* <div className="container mx-auto p-4">
       <h1 className="text-3xl font-semibold">NEW ARRIVAL</h1>
       <CategorySelect
       categories={categories} 
       onCategorySelect={onCategorySelect}
       />
-    </div>
+    </div> */}
     </div>
   );
 };

@@ -30,21 +30,18 @@ const LoginPage: React.FC = () => {
 
     try {
       await login({ email, password }); // Use login function from context
-      router.push('/products'); // Redirect to products page after successful login
+      //router.push('/products'); // Redirect to products page after successful login
+      router.push('/checkout');
     } catch (error) {
       console.error('Login failed:', error);
+      setError('Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // useEffect(() => {
-  //   // Redirect to '/products' page after successful login
-  //   if (isAuthenticated) {
-  //     router.push('/products');
-  //   }
-  // }, [isAuthenticated, router]);
-
   return (
-  
+  //wait
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         {isAuthenticated ? (
           <div className="bg-white p-6 rounded shadow-md text-center">
