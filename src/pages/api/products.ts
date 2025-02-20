@@ -22,8 +22,6 @@ const validateProductData = (product: any): boolean => {
 };
 
 
-
-
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
   const cacheKey = 'all-products';
 

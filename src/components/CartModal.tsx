@@ -3,9 +3,18 @@ import React, { useRef, useEffect } from 'react';
 import { useCart } from '@/hooks/useCart';
 import { CartSummary } from '@/components/CartSummary';
 import { useAuth } from '@/hooks/useAuth';
-import { CartModalProps } from '@/lib/types';
+import { ProductsType } from '@/lib/types';
 import { useRouter } from 'next/router';
 import { ShoppingCart, X } from 'lucide-react';
+
+
+// Interface for CartModal props
+export interface CartModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  cartItems: ProductsType[];
+ 
+}
 
 const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
   const { isAuthenticated } = useAuth();  // Get auth status
@@ -56,6 +65,11 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-4/5 sm:w-3/4 md:w-2/3 lg:w-1/2 max-w-lg relative">
+        
+      <div
+        ref={modalRef}
+        className="bg-white rounded-lg p-6 w-4/5 sm:w-3/4 md:w-2/3 lg:w-1/2 max-w-lg relative flex flex-col items-center"
+      >
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-xl text-gray-500 hover:text-gray-800"
@@ -77,8 +91,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
         updateProductQuantity={handleQuantityChange}  // Function to update quantity   
         />
 
-
-
+        </div>
       </div>
     </div>
   );

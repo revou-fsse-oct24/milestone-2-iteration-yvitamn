@@ -1,4 +1,4 @@
-// components/DynamicImageComponent.tsx
+
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -8,7 +8,7 @@ interface DynamicImageProps {
   alt: string;
   width: number;
   height: number;
- // className?: string;
+  className?: string;
 }
 
 const DynamicImageComponent = ({ imageUrl, alt, width, height }: DynamicImageProps) => {

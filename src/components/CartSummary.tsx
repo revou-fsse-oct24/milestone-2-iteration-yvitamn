@@ -1,8 +1,14 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
-import { CartSummaryProps } from '@/lib/types';
-//import { useCartActions } from '../hooks/useCartActions'
+import { ProductsType } from '@/lib/types';
 
+// Interface for CartSummary props
+export interface CartSummaryProps {
+  cartItems: ProductsType[];
+  removeProductFromCart: (productId: string) => void;
+  onCompleteCheckout: () => void;
+  updateProductQuantity: (productId: string | number, increment: boolean) => void;
+}
 
 export const CartSummary: React.FC<CartSummaryProps> = ({
   cartItems,

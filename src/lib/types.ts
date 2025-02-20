@@ -119,22 +119,6 @@ export interface CategoryType {
   //   };
   // }
 
-// Interface for CartModal props
-export interface CartModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    cartItems: ProductsType[];
-   
-  }
-  
-  // Interface for CartSummary props
-  export interface CartSummaryProps {
-    cartItems: ProductsType[];
-    removeProductFromCart: (productId: string) => void;
-    onCompleteCheckout: () => void;
-    updateProductQuantity: (productId: string | number, increment: boolean) => void;
-  }
-
 
   
   

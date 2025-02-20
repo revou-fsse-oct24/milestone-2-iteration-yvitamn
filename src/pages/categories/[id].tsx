@@ -103,6 +103,7 @@ const ProductCategoryPage = ({ products, category }: ProductCategoryProps) => {
       if (!category || !products) return <div>Loading...</div>;
    
        return (
+        <>
         <div className="container mx-auto px-4 py-10">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
           {category.name} 
@@ -149,6 +150,7 @@ const ProductCategoryPage = ({ products, category }: ProductCategoryProps) => {
           )}
         </div>
       </div>
+      </>
     );
   };
 

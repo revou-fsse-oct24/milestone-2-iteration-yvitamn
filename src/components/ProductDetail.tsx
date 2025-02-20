@@ -58,19 +58,20 @@ export const ProductDetail = ({  product, category, onAddToCart,
         }
   
     return (
-    <div className="container mx-auto p-6">
-        <Link href={backLink}>
+    <div className="container mx-auto p-6 flex flex-col items-center">
+       
+        <Link href={backLink} className="mb-6 text-blue-500">
             <span className="back-button mb-6">{backLinkText}</span>
         </Link>
-
+        
         {/* Product Title */}
-        <h2 className="text-4xl font-bold mb-6">{product.title}</h2>
-  
+        <h2 className="text-4xl font-bold mb-6 text-center">{product.title}</h2>
+        
         {/* Product Image */}
         {/* <div className="mb-4"> */}
         {/* <ProductCard product={product} /> */}
         {/* </div> */}
-
+        
                 <DynamicImageComponent
                     imageUrl={product.imageUrl || null}
                     alt={product.title}
@@ -81,19 +82,19 @@ export const ProductDetail = ({  product, category, onAddToCart,
           
           {/* "rounded-lg mb-4"      */}
         {/* Product Price */}
+        
         <p>
          {category.name}
         </p>
-        <p className="text-xl font-semibold mb-4">${product.price}</p>
-         {/* Product Description  */}
-        <p className="text-lg mb-4">{product.description}</p>
-         <Link href={`/categories/${category.id}`}>
-          <span className="cursor-pointer"><strong>View more products in this category</strong></span>
-        </Link>  
+        <p className="text-xl font-semibold mb-2 text-center">${product.price}</p>
+        
        
-  
-        {/* Add to Cart Button */}
-        <button
+         {/* Product Description  */}
+        <p className="text-lg mb-6 text-center">{product.description}</p>
+        
+
+         {/* Add to Cart Button */}
+         <button
           onClick={handleAddToCart}
           disabled={isAdding} // Disable if product is not loaded
           className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
@@ -104,11 +105,21 @@ export const ProductDetail = ({  product, category, onAddToCart,
           {isAdding ? 'Adding...' : 'Add to Cart'} {/* Display "Adding..." when loading */}
         </button>
 
+        
+       
+        
+         <Link href={`/categories/${category.id}`} className="mt-6 text-blue-500">
+          <span className="cursor-pointer"><strong>View more products in this category</strong></span>
+        </Link>  
+       
+        
+       
+
         {/* Related Products Section (Product Grid) */}
-        <div className="mt-12">
+        {/* <div className="mt-12"> */}
           {/* <h3 className="text-2xl font-bold mb-6">Related Products</h3> */}
           {/* <ProductGrid products={relatedProducts} /> */}
-        </div>  
+        {/* </div>   */}
       </div>
     );
   };

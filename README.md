@@ -1,8 +1,8 @@
 
-[Visit Smartttshoppp](https://shopppvsmart.vercel.app)
+[VISIT SHOPSMART BY VITA](https://shopppvsmart.vercel.app)
 
 
-![Product Image](./src/assets/product.jpg)
+![Product Image](./src/assets/detail.png)
 
 
 ## Table of Contents
@@ -12,7 +12,7 @@
 - [Installation](#installation)
 - [Project Structure](#project-structure)
 - [Key Implementations](#key-implementations)
-- [Build Details & Performance](#build-details)
+- [Build Details](#build-details)
 - [Future Roadmap](#future-roadmap)
 
 
@@ -23,7 +23,7 @@
 -**Categories-based Product Filtering**: Displays products based on categories (/categories/[id])
 -**Cart Modal & Functionality**: Shows cart items, allows quantity updates, and displays total price before checkout. Users can add items to the cart with quantity selection
 -**User Authentication**: Uses token-based authentication (stored in localStorage) for user login and checkout access
--**API Caching**: Caches product data to improve performance and reduce redundant API calls.
+-**API Route Handler with Caching**: Caches product data to improve performance and reduce redundant API calls.
 -**Error Handling**: Integrates error handling for API responses and faulty data.
 
 ## Tech Stack
@@ -64,11 +64,71 @@ src/
 
 ## Key Implementations
 
+### Cart & State Management
+
+**File**: `components/CartModal.tsx`
+```typescript
+const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
+  const { isAuthenticated } = useAuth();  
+  const { 
+      addedProducts,
+      removeProductFromCart, 
+      setCheckout,
+      handleQuantityChange
+
+    } = useCart();
+```
+
+**File**: `components/CartSummary.tsx`
+```typescript
+export const CartSummary: React.FC<CartSummaryProps> = ({
+  cartItems,
+  removeProductFromCart,
+  onCompleteCheckout,
+  updateProductQuantity, 
+}) => {
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+```
+
+### Cart Hook
+
+**File**: `hooks/useCart.tsx`
+```typescript
+export const useCart = () => {
+  const context = useContext(CartContext);
+
+  if (!context) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  const {
+    addedProducts,
+    checkout,
+    addProductToCart,
+    removeProductFromCart,
+    updateProductQuantity,
+    onCompleteCheckout,
+    setCheckout,
+    clearCart
+  } = context;
+```
+
+### API Route Handler with Caching
+
+**File**: `products/api/product.ts`
+```typescript
+export default async function handler(_: NextApiRequest, res: NextApiResponse) {
+  const cacheKey = 'all-products';
+
+  // Check if data is cached
+  const cachedData = cache.get(cacheKey);
+  if (cachedData) {
+    console.log('Serving from cache');
+    return res.status(200).json(cachedData);
+  }
+```
 
 
-
-
-## Build Details & Performance
+## Build Details 
 Build output with hybrid rendering:
 ![Build](./src/assets/build2.jpg)
 
