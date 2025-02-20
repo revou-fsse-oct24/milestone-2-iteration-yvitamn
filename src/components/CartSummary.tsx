@@ -1,8 +1,8 @@
-'use client';
-import { useState, useEffect, useCallback } from 'react';
+
+//import { useState, useEffect, useCallback } from 'react';
 import { ProductsType } from '@/lib/types';
 
-// Interface for CartSummary props
+
 export interface CartSummaryProps {
   cartItems: ProductsType[];
   removeProductFromCart: (productId: string) => void;
@@ -16,31 +16,31 @@ export const CartSummary: React.FC<CartSummaryProps> = ({
   onCompleteCheckout,
   updateProductQuantity, 
 }) => {
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+//   const [totalPrice, setTotalPrice] = useState<number>(0);
 
- // Memoized function to calculate total price
- const calculateTotalPrice = useCallback(() => {
-  const total = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-  setTotalPrice(total);
-}, [cartItems]);
+//  // Memoized function to calculate total price
+//  const calculateTotalPrice = useCallback(() => {
+//   const total = cartItems.reduce(
+//     (total, item) => total + item.price * item.quantity,
+//     0
+//   );
+//   setTotalPrice(total);
+// }, [cartItems]);
 
-// Update the total price when cart items change
-useEffect(() => {
-  calculateTotalPrice();
-}, [cartItems, calculateTotalPrice]);
+// // Update the total price when cart items change
+// useEffect(() => {
+//   calculateTotalPrice();
+// }, [cartItems, calculateTotalPrice]);
 
 
-  // Use setInterval to simulate real-time updates (every 3 seconds)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      calculateTotalPrice();
-    }, 5000); // Update total price every 3 seconds
+//   // Use setInterval to simulate real-time updates (every 3 seconds)
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       calculateTotalPrice();
+//     }, 5000); // Update total price every 3 seconds
 
-    return () => clearInterval(interval); // Clean up the interval on component unmount
-  }, [cartItems, calculateTotalPrice]);
+//     return () => clearInterval(interval); // Clean up the interval on component unmount
+//   }, [cartItems, calculateTotalPrice]);
 
   return (
     <div className="max-h-64 overflow-y-auto mb-4">
@@ -101,7 +101,9 @@ useEffect(() => {
     {/* Total Price */}
     <div className="mt-4 text-lg font-semibold">
       <p>Total Price: </p>
-      <p className="text-xl text-green-500 font-bold">${totalPrice.toFixed(2)}</p>
+      <p className="text-xl text-green-500 font-bold">
+      ${cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}
+        </p>
     </div>
 
     {/* Checkout Buttons */}

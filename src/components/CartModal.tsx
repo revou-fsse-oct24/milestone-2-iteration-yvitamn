@@ -1,34 +1,31 @@
 'use client';
 import React, { useRef, useEffect } from 'react';
-import { useCart } from '@/hooks/useCart';
+import { useCartProcess } from '@/hooks/useCartProcess';
 import { CartSummary } from '@/components/CartSummary';
 import { useAuth } from '@/hooks/useAuth';
-import { ProductsType } from '@/lib/types';
 import { useRouter } from 'next/router';
 import { ShoppingCart, X } from 'lucide-react';
 
 
-// Interface for CartModal props
 export interface CartModalProps {
   isOpen: boolean;
   onClose: () => void;
-  cartItems: ProductsType[];
- 
 }
 
 const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
-  const { isAuthenticated } = useAuth();  // Get auth status
-  const { 
-      addedProducts,
-      removeProductFromCart, 
-      setCheckout,
-      handleQuantityChange
-
-    } = useCart();
- 
+  const { isAuthenticated } = useAuth();  
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
   
+  const { 
+      addedProducts,
+      handleRemoveProduct, 
+      handleCheckout,
+      handleQuantityChange
+
+    } = useCartProcess();
+ 
+    
   // Close the modal when clicking outside of it
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -52,13 +49,10 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
         router.push('/login');
         return;
       }
-      setCheckout(true); // Set checkout status to true    
+      handleCheckout(); // Set checkout status to true    
       router.push('/checkout'); // Redirect to checkout page
       
     };
-
-
-    
 
       if (!isOpen) return null; // If modal isn't open, don't render
 
@@ -86,7 +80,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
         {/* Pass props to CartSummary for cart-related logic */}
         <CartSummary       
         cartItems={addedProducts}          // Cart items (products)
-        removeProductFromCart={removeProductFromCart}   // Function to remove product
+        removeProductFromCart={handleRemoveProduct}   // Function to remove product
         onCompleteCheckout={handleCompleteCheckout}     // Function to complete checkout                     
         updateProductQuantity={handleQuantityChange}  // Function to update quantity   
         />

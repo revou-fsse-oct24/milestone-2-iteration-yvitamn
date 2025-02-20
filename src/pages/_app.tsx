@@ -5,16 +5,13 @@ import type { AppProps } from 'next/app';
 import { AuthenticateProvider } from '@/lib/contexts/AuthenticateProvider';
 import { CartProvider } from '@/lib/contexts/CartProvider';
 import LayoutUser from '@/components/LayoutUser';
-import { CategoryType } from '@/lib/types';
 import '@/styles/globals.css'; 
-// import Navbar from '@/layout/Navbar';
-// import Header from '@/layout/Header';
-// import Footer from '@/layout/Footer';
+
 
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const categories: CategoryType[] = []; 
+  
 
   return (
     <AuthenticateProvider>     
@@ -24,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
        <header className="flex flex-col min-h-screen">
         <Header />
        </header> */}
-        <LayoutUser categories={categories}>
+        <LayoutUser>
         {/* <main className="flex-grow"> */}
         <Component {...pageProps} />
         {/* </main> */}
