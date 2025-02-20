@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { CategoryType } from '@/lib/types';
-import { fetchCategories } from '@/lib/api'; 
+import { fetchCategories } from '@/lib/api';
+import { useMemo } from 'react';
+
 
 export const useNavbar = () => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -22,9 +24,12 @@ export const useNavbar = () => {
     loadCategories();
   }, []);
 
+  // Memoize categories so that it only recalculates when categories change
+  const memoizedCategories = useMemo(() => categories, [categories]);
+
   const isActive = (path: string) => {
     return pathname === path ? "text-gray-300" : "hover:text-gray-300";
   };
 
-  return { categories, isActive };
+  return { categories: memoizedCategories, isActive };
 };
